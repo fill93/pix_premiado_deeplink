@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abrir no app</title>
+</head>
+<body style="font-family:sans-serif;text-align:center;padding:40px">
+  <h3>Abrindo o app...</h3>
+  <p><a id="abrir" style="font-size:20px">Toque aqui se não abrir</a></p>
+  <p><a href="LINK_DO_SEU_APK">Ainda não tem o app? Baixe aqui</a></p>
+  <script>
+    const tag = new URLSearchParams(location.search).get("tag") || "";
+    const link = "pixpremiado://app?tag=" + encodeURIComponent(tag);
+    document.getElementById("abrir").href = link;
+    location.href = link;
+  </script>
+</body>
+</html>
