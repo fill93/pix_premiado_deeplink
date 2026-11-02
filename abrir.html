@@ -3,17 +3,122 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abrir no app</title>
+  <title>Pix Premiado</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(160deg, #0f9d58, #0b6b3a);
+      color: #1f2933;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    }
+    .icone { font-size: 56px; line-height: 1; margin-bottom: 8px; }
+    h1 { font-size: 24px; margin: 8px 0 4px; }
+    .sub { color: #52606d; margin: 0 0 20px; font-size: 15px; }
+    .tag {
+      display: inline-block;
+      background: #e6f4ea;
+      color: #0b6b3a;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 12px;
+    }
+    .btn-principal { background: #0f9d58; color: #fff; }
+    .btn-secundario { background: #fff; color: #0b6b3a; border: 2px solid #0f9d58; }
+    .loader {
+      width: 28px; height: 28px;
+      border: 4px solid #d9e2ec;
+      border-top-color: #0f9d58;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: gira 0.9s linear infinite;
+    }
+    @keyframes gira { to { transform: rotate(360deg); } }
+    #ajuda { display: none; margin-top: 24px; text-align: left; }
+    #ajuda h2 { font-size: 16px; margin: 0 0 8px; text-align: center; }
+    #ajuda p, #ajuda li { font-size: 14px; color: #52606d; line-height: 1.5; }
+    #ajuda ol { padding-left: 20px; margin: 8px 0 0; }
+  </style>
 </head>
-<body style="font-family:sans-serif;text-align:center;padding:40px">
-  <h3>Abrindo o app...</h3>
-  <p><a id="abrir" style="font-size:20px">Toque aqui se não abrir</a></p>
-  <p><a href="https://drive.google.com/file/d/14youywRr-Ug6eEyt4EU6hYNCnsu-5Xis/view?usp=drive_link">Ainda não tem o app? Baixe aqui</a></p>
+<body>
+  <main class="card">
+    <div class="icone">🎟️</div>
+    <h1>Pix Premiado</h1>
+    <p class="sub" id="status">Abrindo o app para você...</p>
+    <div class="loader" id="loader"></div>
+
+    <div id="tag" class="tag" style="display:none"></div>
+
+    <a id="abrir" class="btn btn-principal">Abrir no app</a>
+
+    <section id="ajuda">
+      <h2>O app não abriu?</h2>
+      <p>Talvez você ainda não tenha o app instalado. É rápido:</p>
+      <ol>
+        <li>Toque em <b>Baixar o app</b> abaixo.</li>
+        <li>Abra o arquivo baixado e toque em <b>Instalar</b>.</li>
+        <li>Se o Android avisar sobre "apps desconhecidos", toque em <b>Configurações</b> e permita a instalação.</li>
+        <li>Depois, volte aqui e toque em <b>Abrir no app</b>.</li>
+      </ol>
+      <a class="btn btn-secundario"
+         href="https://drive.google.com/uc?export=download&id=14youywRr-Ug6eEyt4EU6hYNCnsu-5Xis">
+        Baixar o app
+      </a>
+    </section>
+  </main>
+
   <script>
-    const tag = new URLSearchParams(location.search).get("tag") || "";
-    const link = "pixpremiado://app?tag=" + encodeURIComponent(tag);
+    var tag = new URLSearchParams(location.search).get("tag") || "";
+    var link = "pixpremiado://app?tag=" + encodeURIComponent(tag);
+
     document.getElementById("abrir").href = link;
+
+    if (tag) {
+      var el = document.getElementById("tag");
+      el.textContent = "Rifa: " + tag;
+      el.style.display = "inline-block";
+    }
+
+    // Se o app abrir, a página fica oculta e cancelamos a mensagem de ajuda
+    var abriu = false;
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) abriu = true;
+    });
+
     location.href = link;
+
+    setTimeout(function () {
+      if (abriu) return;
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("status").textContent = "Toque no botão para abrir o app.";
+      document.getElementById("ajuda").style.display = "block";
+    }, 2500);
   </script>
 </body>
 </html>
