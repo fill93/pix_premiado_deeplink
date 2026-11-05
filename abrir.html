@@ -4,6 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pix Premiado</title>
+
+  <!-- Google Analytics 4 (troque G-XXXXXXXXXX pelo seu ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7P8CTY0Y0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-E7P8CTY0Y0');
+
+    function rastrear(nome, extra) {
+      gtag('event', nome, Object.assign({ transport_type: 'beacon' }, extra || {}));
+    }
+  </script>
+
   <style>
     * { box-sizing: border-box; }
     body {
@@ -84,7 +98,7 @@
     .whatsapp svg { width: 34px; height: 34px; fill: #fff; flex-shrink: 0; }
     .whatsapp:active { transform: scale(.94); }
 
-    /* Texto "Dúvidas": aparece, fica alguns segundos e some */
+    /* Texto "Dúvidas?": aparece, fica alguns segundos e some */
     .whatsapp .rotulo {
       color: #fff;
       font-size: 16px;
@@ -131,7 +145,7 @@
     </section>
   </main>
 
-  <!-- Botão flutuante do WhatsApp (troque o número abaixo) -->
+  <!-- Botão flutuante do WhatsApp -->
   <a class="whatsapp"
      href="https://wa.me/558698066260?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20para%20baixar%20o%20app%20Pix%20Premiado."
      target="_blank" rel="noopener" aria-label="Dúvidas? Fale no WhatsApp">
@@ -153,6 +167,19 @@
       el.style.display = "inline-block";
     }
 
+    // Rastreamento de cliques
+    rastrear("pagina_aberta", { rifa: tag });
+
+    document.getElementById("abrir").addEventListener("click", function () {
+      rastrear("clicou_abrir_app", { rifa: tag });
+    });
+    document.querySelector(".btn-secundario").addEventListener("click", function () {
+      rastrear("clicou_baixar_app", { rifa: tag });
+    });
+    document.querySelector(".whatsapp").addEventListener("click", function () {
+      rastrear("clicou_whatsapp", { rifa: tag });
+    });
+
     // Se o app abrir, a página fica oculta e cancelamos a mensagem de ajuda
     var abriu = false;
     document.addEventListener("visibilitychange", function () {
@@ -163,6 +190,7 @@
 
     setTimeout(function () {
       if (abriu) return;
+      rastrear("app_nao_abriu", { rifa: tag });
       document.getElementById("loader").style.display = "none";
       document.getElementById("status").textContent = "Toque no botão para abrir o app.";
       document.getElementById("ajuda").style.display = "block";
