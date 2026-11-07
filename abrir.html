@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pix Premiado</title>
 
-  <!-- Google Analytics 4 (troque G-XXXXXXXXXX pelo seu ID) -->
+  <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7P8CTY0Y0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,21 +21,21 @@
   <style>
     * { box-sizing: border-box; }
     body {
-	  margin: 0;
-	  min-height: 100vh;
-	  min-height: 100dvh;        /* altura real da tela no celular */
-	  display: flex;
-	  align-items: flex-start;   /* era center */
-	  justify-content: center;
-	  padding: 20px;
-	  font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-	  background: linear-gradient(160deg, #04763E, #024a27);
-	  color: #1f2933;
-	}
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+      font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(160deg, #04763E, #024a27);
+      color: #1f2933;
+    }
     .card {
       width: 100%;
       max-width: 420px;
-	  margin: auto;
+      margin: auto;
       background: #fff;
       border-radius: 20px;
       padding: 32px 24px;
@@ -112,6 +112,10 @@
       opacity: 0;
       animation: rotulo 6s ease-in-out 3s forwards;
     }
+	.btn-pequeno {
+		font-size: 14px;
+		padding: 10px;
+	}
     @keyframes rotulo {
       0%   { max-width: 0;    padding-left: 0;   opacity: 0; }
       12%  { max-width: 100px; padding-left: 8px; opacity: 1; }
@@ -128,20 +132,24 @@
     <div class="loader" id="loader"></div>
 
     <div id="tag" class="tag" style="display:none"></div>
-	
-	<a id="baixar" class="btn btn-principal"
+
+    <a id="baixar" class="btn btn-principal"
        href="https://github.com/fill93/pix_premiado_deeplink/releases/latest/download/app-release.apk">
-          Baixar o App
+      Baixar o App
     </a>
 
-    <section id="ajuda">          
-      <ol>       
+    <section id="ajuda">
+      <ol>
         <li>Qualquer aviso de segurança é normal, acontece porque o download não é da PlayStore.</li>
         <li>Abra o arquivo baixado e toque em <b>Instalar</b>.</li>
         <li>Se o Android avisar sobre "apps desconhecidos", toque em <b>configurações</b> e <b>permitir a instalação</b>.</li>
       </ol>
-	  <br>
-	  <a id="abrir" class="btn btn-secundario">Abrir o App</a>
+      <br>
+      <a id="ajuda-whatsapp" class="btn btn-secundario btn-pequeno"
+         href="https://wa.me/558698066260?text=Ol%C3%A1%2C%20vim%20pelo%20b%C3%B4nus%20de%20cadastro%20do%20Pix%20Premiado."
+         target="_blank" rel="noopener">
+			Temos um bônus disponível pra você!<br>Falar no WhatsApp
+      </a>
     </section>
   </main>
 
@@ -159,8 +167,6 @@
     var tag = new URLSearchParams(location.search).get("tag") || "";
     var link = "pixpremiado://app?tag=" + encodeURIComponent(tag);
 
-    document.getElementById("abrir").href = link;
-
     if (tag) {
       var el = document.getElementById("tag");
       el.textContent = "Rifa: " + tag;
@@ -170,12 +176,12 @@
     // Rastreamento de cliques
     rastrear("pagina_aberta", { rifa: tag });
 
-    document.getElementById("abrir").addEventListener("click", function () {
-      rastrear("clicou_abrir_app", { rifa: tag });
-    });
     document.getElementById("baixar").addEventListener("click", function () {
-	  rastrear("clicou_baixar_app", { rifa: tag });
-	});
+      rastrear("clicou_baixar_app", { rifa: tag });
+    });
+    document.getElementById("ajuda-whatsapp").addEventListener("click", function () {
+      rastrear("clicou_whatsapp_ajuda", { rifa: tag });
+    });
     document.querySelector(".whatsapp").addEventListener("click", function () {
       rastrear("clicou_whatsapp", { rifa: tag });
     });
