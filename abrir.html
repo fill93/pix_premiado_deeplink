@@ -68,6 +68,23 @@
     }
     .btn-principal { background: #04763E; color: #fff; }
     .btn-secundario { background: #fff; color: #04763E; border: 2px solid #04763E; }
+
+    /* Botão do YouTube: borda vermelha e ícone à esquerda */
+    .btn-youtube {
+      background: #fff;
+      color: #c4302b;
+      border: 2px solid #e62117;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-youtube svg { width: 26px; height: 26px; flex-shrink: 0; fill: #FF0000; }
+
+    .btn-pequeno {
+      font-size: 14px;
+      padding: 10px;
+    }
     .loader {
       width: 28px; height: 28px;
       border: 4px solid #d9e2ec;
@@ -112,10 +129,6 @@
       opacity: 0;
       animation: rotulo 6s ease-in-out 3s forwards;
     }
-	.btn-pequeno {
-		font-size: 14px;
-		padding: 10px;
-	}
     @keyframes rotulo {
       0%   { max-width: 0;    padding-left: 0;   opacity: 0; }
       12%  { max-width: 100px; padding-left: 8px; opacity: 1; }
@@ -148,7 +161,16 @@
       <a id="ajuda-whatsapp" class="btn btn-secundario btn-pequeno"
          href="https://wa.me/558698066260?text=Ol%C3%A1%2C%20vim%20pelo%20b%C3%B4nus%20de%20cadastro%20do%20Pix%20Premiado."
          target="_blank" rel="noopener">
-			Temos um bônus disponível pra você!<br>Falar no WhatsApp
+        Temos um bônus disponível pra você!<br>Falar no WhatsApp
+      </a>
+
+      <a id="ajuda-youtube" class="btn btn-youtube btn-pequeno"
+         href="https://www.youtube.com/shorts/MS-NM920EKk"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <span>Ver tutorial de instalação</span>
       </a>
     </section>
   </main>
@@ -181,6 +203,9 @@
     });
     document.getElementById("ajuda-whatsapp").addEventListener("click", function () {
       rastrear("clicou_whatsapp_ajuda", { rifa: tag });
+    });
+    document.getElementById("ajuda-youtube").addEventListener("click", function () {
+      rastrear("clicou_youtube_tutorial", { rifa: tag });
     });
     document.querySelector(".whatsapp").addEventListener("click", function () {
       rastrear("clicou_whatsapp", { rifa: tag });
